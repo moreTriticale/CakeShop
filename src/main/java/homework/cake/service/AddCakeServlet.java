@@ -34,7 +34,7 @@ public class AddCakeServlet extends HttpServlet {
 
 
         //跳转到展示界面
-        resp.sendRedirect("add.html");
+        resp.sendRedirect("list");
 
 
     }

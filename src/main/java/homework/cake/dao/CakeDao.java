@@ -2,9 +2,8 @@ package homework.cake.dao;
 
 import homework.entity.Cake;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,8 +53,37 @@ public class CakeDao {
 
     //查询所有在售蛋糕功能
     public List<Cake> findByNormalState(){
+        Connection con = null;
+        List<Cake> list = null;
+        ResultSet rs = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cake", "root", "yaojinlun");
+            list = new ArrayList<>();
+            String sql = "select * from cake_db";
+            PreparedStatement ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int price = rs.getInt("price");
+                int state = rs.getInt("state");
+                Cake cake = new Cake(id,name,price,state);
+                list.add(cake);
+            }
 
-        return null;
+        } catch (Exception e) {
+           e.printStackTrace();
+        }finally {
+            if (con != null){
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return list;
     }
 
 }
