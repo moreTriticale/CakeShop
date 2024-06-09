@@ -13,6 +13,11 @@ import java.io.IOException;
 @WebServlet("/AddCake")
 public class AddCakeServlet extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doPost(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //获取请求
         String name = req.getParameter("name");

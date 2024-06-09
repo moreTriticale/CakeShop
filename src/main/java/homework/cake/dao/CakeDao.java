@@ -48,7 +48,27 @@ public class CakeDao {
 
     //修改蛋糕功能
     public void updateState(int id, int state){
-
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement pr = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cake", "root", "yaojinlun");
+            String sql = "update cake_db set state = ? where id = ?";
+            pr = con.prepareStatement(sql);
+            pr.setInt(1,state);
+            pr.setInt(2,id);
+            pr.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     //查询所有在售蛋糕功能
